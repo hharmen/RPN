@@ -14,15 +14,19 @@ def calculate_rpn(input_expression : str) -> list[float]:
     :input_expression: Выражение, записанное в обратной польской записи
     :return: Возвращает список (стек) чисел
     """
-    stack: list[float] = []
+    stack: list[float | int] = []
     token_counter = [[0, 0, 0]] #Для отслеживания количества операторов и чисел, чтобы не применяли бинарную операцию к менее чем двум числам (можно было бы обойтись без этого, если бы не бессмысленные скобки)
     #([количество чисел в подксобочном выражении, количество бинарных операций в подскобочном выражении, количество унарных операций в подскобочном выражении])
     brackets_counter = [0, 0] #Для отслеживания правильной расстановки скобок (количество открывающих, количество закрывающих)
+    input_num: float | None | int = None
     for i in input_expression.split():
         try:
-            input_num = float(i)
+            input_num = int(i)
         except ValueError:
-            input_num = None
+            try:
+                input_num = float(i)
+            except ValueError:
+                input_num = None
         if input_num is None:
             if i in constants.BINARY_OPERATIONS:
                 try:
@@ -48,25 +52,27 @@ def calculate_rpn(input_expression : str) -> list[float]:
 
             elif i == "(":
                 brackets_counter[0] += 1
-                token_counter[-1][0] += 1
+                token_counter[-1][0] += 1 #бинарная операция может быть вместе с числом и скобочным выражением или вместе только скобочными выражениями
                 token_counter.append([0, 0, 0])
 
 
             elif i == ")":
+                if brackets_counter[0] <= brackets_counter[1]:
+                    raise rpn_errors.BracketsError("Неправильное написание скобок")
                 token_counter.pop()
                 brackets_counter[1] += 1
+            else:
+                raise rpn_errors.InputError(f"Неизвестный символ {i}")
+
         else:
             stack.append(input_num)
             token_counter[-1][0] += 1
 
         count_numbers, count_binary_operators, count_unary_operators = token_counter[-1]
-
-        if (brackets_counter[0] < brackets_counter[1]):
-            raise rpn_errors.BracketsError("Неправильное написание скобок")
-
         if ((token_counter[-1][0] == 0 and (token_counter[-1][1] > 0 or token_counter[-1][1] > 0)) or \
         (token_counter[-1][0] <= token_counter[-1][1])) and \
               (token_counter[-1] != [0, 0, 0]):
             raise rpn_errors.StackUnderflowError("Нехватка чисел для вычисления, сликшом много операторов")
-
+    if brackets_counter[0] != brackets_counter[1]:
+        raise rpn_errors.BracketsError("Неправильное написание скобок")
     return stack

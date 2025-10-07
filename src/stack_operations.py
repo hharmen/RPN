@@ -1,4 +1,4 @@
-def push(st: list[float], x: float) -> None:
+def push(st: list[float | int], x: float | int) -> None:
     """
     Кладет элемент в стек
     :st: Стек
@@ -6,7 +6,7 @@ def push(st: list[float], x: float) -> None:
     """
     st.append(x)
 
-def pop(st: list[float]) -> float:
+def pop(st: list[float | int]) -> float | int:
     """
     Достает из стека верхний элемент
     :st: Стек
@@ -16,7 +16,7 @@ def pop(st: list[float]) -> float:
         raise IndexError("pop from empty stack")
     return st.pop()
 
-def is_empty(st: list[float]) -> bool:
+def is_empty(st: list[float | int]) -> bool:
     """
     Проверяет не пустой ли стек
     :st: Стек

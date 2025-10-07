@@ -6,3 +6,6 @@ class DivisionByZeroError(Exception):
 
 class StackUnderflowError(Exception):
     """Ошибка нехватки чисел для вычисления результата"""
+
+class InputError(Exception):
+    """Неправильный ввод"""
