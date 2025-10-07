@@ -36,7 +36,7 @@ def calculate_rpn(input_expression : str) -> list[float]:
                     token_counter[-1][1] += 1
 
                 except IndexError:
-                    raise rpn_errors.StackUnderflowError("Нехватка чисел для вычисления, сликшом много операторов")
+                    raise rpn_errors.StackUnderflowError("Нехватка чисел для вычисления, сликшом много операторов ХВАТИТ СПАМИТЬ ЭТИМИ ОПЕРАТОРАМИ")
                 except ZeroDivisionError:
                     raise rpn_errors.DivisionByZeroError("ТЫ ЗАБЫЛ, ЧТО НА 0 ДЕЛИТЬ НЕЛЬЗЯ! ИДИ ЛУЧШЕ У БИТЮКОВА СПРОСИ ПОЧЕМУ НЕЛЬЗЯ")
 
@@ -48,7 +48,7 @@ def calculate_rpn(input_expression : str) -> list[float]:
                     token_counter[-1][2] += 1
                     print(token_counter)
                 except IndexError:
-                    raise rpn_errors.StackUnderflowError("Нехватка чисел для вычисления, сликшом много операторов")
+                    raise rpn_errors.StackUnderflowError("Нехватка чисел для вычисления, сликшом много операторов ХВАТИТ СПАМИТЬ ЭТИМИ ОПЕРАТОРАМИ")
 
             elif i == "(":
                 brackets_counter[0] += 1
@@ -58,11 +58,11 @@ def calculate_rpn(input_expression : str) -> list[float]:
 
             elif i == ")":
                 if brackets_counter[0] <= brackets_counter[1]:
-                    raise rpn_errors.BracketsError("Неправильное написание скобок")
+                    raise rpn_errors.BracketsError("Неправильное написание скобок, НЕФИГ БЫЛО ИХ ВООБЩЕ ИСПОЛЬЗОВАТЬ В РПН")
                 token_counter.pop()
                 brackets_counter[1] += 1
             else:
-                raise rpn_errors.InputError(f"Неизвестный символ {i}")
+                raise rpn_errors.InputError(f"Неизвестный символ {i} ОБ КЛАВИАТУРУ УДАРИЛСЯ?")
 
         else:
             stack.append(input_num)
@@ -72,7 +72,7 @@ def calculate_rpn(input_expression : str) -> list[float]:
         if ((token_counter[-1][0] == 0 and (token_counter[-1][1] > 0 or token_counter[-1][1] > 0)) or \
         (token_counter[-1][0] <= token_counter[-1][1])) and \
               (token_counter[-1] != [0, 0, 0]):
-            raise rpn_errors.StackUnderflowError("Нехватка чисел для вычисления, сликшом много операторов")
+            raise rpn_errors.StackUnderflowError("Нехватка чисел для вычисления, сликшом много операторов ХВАТИТ СПАМИТЬ ЭТИМИ ОПЕРАТОРАМИ")
     if brackets_counter[0] != brackets_counter[1]:
-        raise rpn_errors.BracketsError("Неправильное написание скобок")
+        raise rpn_errors.BracketsError("Неправильное написание скобок, НЕФИГ БЫЛО ИХ ВООБЩЕ ИСПОЛЬЗОВАТЬ В РПН")
     return stack
