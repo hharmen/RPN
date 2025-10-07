@@ -1,9 +1,10 @@
 import calculate
+import sys
 
 
 def main() -> None:
 
-    expression = input()
+    expression = sys.stdin.read()
     result = calculate.calculate_rpn(expression)
 
     print(*result)
