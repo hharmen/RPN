@@ -1,9 +1,9 @@
-from typing import Dict, Callable
+from typing import Callable
 BINARY_OPERATIONS = ['+', '-', '*', '/', '//', '%', '**']
 UNARY_OPERATIONS = ['~', '$']
 ALL_OPERATIONS = BINARY_OPERATIONS + UNARY_OPERATIONS
 
-operations: Dict[str, Callable] = {
+operations: dict[str, Callable] = {
             '+': lambda x, y: x + y,
             '-': lambda x, y: x - y,
             '*': lambda x, y: x * y,

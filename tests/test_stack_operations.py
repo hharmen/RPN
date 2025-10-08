@@ -1,10 +1,5 @@
 import pytest
-import sys
-import os
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
-
-from stack_operations import push, pop, is_empty
+from src.stack_operations import push, pop, is_empty
 
 
 class TestPush:

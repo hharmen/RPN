@@ -1,11 +1,11 @@
-import calculate
+import src.calculate
 import sys
 
 
 def main() -> None:
 
-    expression = sys.stdin.read()
-    result = calculate.calculate_rpn(expression)
+    expression = sys.stdin.readline()
+    result = src.calculate.calculate_rpn(expression)
 
     print(*result)
 

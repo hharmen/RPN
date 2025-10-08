@@ -1,12 +1,6 @@
 import pytest
-import sys
-import os
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
-
-from calculate import calculate_rpn
-import rpn_errors
-
+from src.calculate import calculate_rpn
+import src.rpn_errors
 
 
 class TestRPNCalculatorSuccess:
@@ -116,50 +110,50 @@ class TestRPNCalculatorErrors:
 
     def test_division_by_zero(self) -> None:
         """Тест деления на ноль"""
-        with pytest.raises(rpn_errors.DivisionByZeroError):
+        with pytest.raises(src.rpn_errors.DivisionByZeroError):
             calculate_rpn("1 0 /")
 
     def test_integer_division_by_zero(self) -> None:
         """Тест целочисленного деления на ноль"""
-        with pytest.raises(rpn_errors.DivisionByZeroError):
+        with pytest.raises(src.rpn_errors.DivisionByZeroError):
             calculate_rpn("1 0 //")
 
     def test_modulo_by_zero(self) -> None:
         """Тест c остатком деления на ноль"""
-        with pytest.raises(rpn_errors.DivisionByZeroError):
+        with pytest.raises(src.rpn_errors.DivisionByZeroError):
             calculate_rpn("1 0 %")
 
     def test_stack_underflow_binary(self) -> None:
         """Тест недостатка операторов для бинарной операции"""
-        with pytest.raises(rpn_errors.StackUnderflowError):
+        with pytest.raises(src.rpn_errors.StackUnderflowError):
             calculate_rpn("1 +")
 
     def test_stack_underflow_unary(self) -> None:
         """Тест недостатка операторов для унарной операции"""
-        with pytest.raises(rpn_errors.StackUnderflowError):
+        with pytest.raises(src.rpn_errors.StackUnderflowError):
             calculate_rpn("~")
 
     def test_invalid_token(self) -> None:
         """Тест неизвестного символа"""
-        with pytest.raises(rpn_errors.InputError):
+        with pytest.raises(src.rpn_errors.InputError):
             calculate_rpn("1 2 b52")
 
     def test_unmatched_closing_bracket(self) -> None:
         """Тест лишней закрывающей скобки"""
-        with pytest.raises(rpn_errors.BracketsError):
+        with pytest.raises(src.rpn_errors.BracketsError):
             calculate_rpn("1 2 + )")
 
     def test_unmatched_opening_bracket(self) -> None:
         """Тест незакрытой открывающей скобки"""
-        with pytest.raises(rpn_errors.BracketsError):
+        with pytest.raises(src.rpn_errors.BracketsError):
             calculate_rpn("( 1 2 +")
 
     def test_incorrect_bracket_sequence(self) -> None:
         """Тест неправильной последовательности скобок"""
-        with pytest.raises(rpn_errors.BracketsError):
+        with pytest.raises(src.rpn_errors.BracketsError):
             calculate_rpn(") (")
 
     def test_operation_in_brackets_without_numbers(self) -> None:
         """Тест операции в скобках без чисел"""
-        with pytest.raises(rpn_errors.StackUnderflowError):
+        with pytest.raises(src.rpn_errors.StackUnderflowError):
             calculate_rpn("( + )")
